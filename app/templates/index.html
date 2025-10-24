@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="filters">
+  <form method="get">
+    <label>Category:</label>
+    <select name="category" onchange="this.form.submit()">
+      <option value="" {% if not active_category %}selected{% endif %}>All</option>
+      <option value="resort" {% if active_category=='resort' %}selected{% endif %}>Digital-free Resorts</option>
+      <option value="retreat" {% if active_category=='retreat' %}selected{% endif %}>Nature Retreats</option>
+      <option value="mindfulness" {% if active_category=='mindfulness' %}selected{% endif %}>Mindfulness Spots</option>
+    </select>
+  </form>
+</section>
+<section class="cards">
+  {% for p in places %}
+    <article class="card">
+      <a href="{{ url_for('main.destination_detail', destination_id=p.id) }}">
+        {% set img = p.primary_image() %}
+        {% if img %}
+          <img src="{{ url_for('main.uploaded_file', filename=img.filename) }}" alt="{{ img.caption or p.name }}">
+        {% else %}
+          <div class="placeholder">No image</div>
+        {% endif %}
+        <div class="card-body">
+          <h3>{{ p.name }}</h3>
+          <p class="muted">{{ p.location }} · {{ p.category|capitalize }}</p>
+          <p>{{ p.description[:140] }}{% if p.description|length > 140 %}…{% endif %}</p>
+        </div>
+      </a>
+    </article>
+  {% else %}
+    <p>No destinations found yet.</p>
+  {% endfor %}
+</section>
+{% endblock %}

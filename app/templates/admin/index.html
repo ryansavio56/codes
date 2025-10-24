@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="admin-header">
+  <h2>Admin</h2>
+  <a class="btn" href="{{ url_for('admin.create_destination') }}">+ Add Destination</a>
+</div>
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Location</th>
+      <th>Category</th>
+      <th>Images</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for p in places %}
+      <tr>
+        <td>{{ p.name }}</td>
+        <td>{{ p.location }}</td>
+        <td>{{ p.category|capitalize }}</td>
+        <td>{{ p.images|length }}</td>
+        <td>
+          <a class="btn" href="{{ url_for('admin.upload_image', destination_id=p.id) }}">Upload Image</a>
+          <a class="btn" href="{{ url_for('main.destination_detail', destination_id=p.id) }}">View</a>
+        </td>
+      </tr>
+    {% else %}
+      <tr><td colspan="5">No destinations yet.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

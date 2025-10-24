@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>New Destination</h2>
+<form method="post">
+  {{ form.hidden_tag() }}
+  <div class="form-field">{{ form.name.label }} {{ form.name(size=40) }}</div>
+  <div class="form-field">{{ form.location.label }} {{ form.location(size=60) }}</div>
+  <div class="form-field">{{ form.category.label }} {{ form.category() }}</div>
+  <div class="form-field">{{ form.has_wifi() }} {{ form.has_wifi.label }}</div>
+  <div class="form-field">{{ form.allows_screens() }} {{ form.allows_screens.label }}</div>
+  <div class="form-field">{{ form.description.label }} {{ form.description(rows=6, cols=70) }}</div>
+  <div class="form-actions">{{ form.submit(class_='btn primary') }}</div>
+</form>
+{% endblock %}

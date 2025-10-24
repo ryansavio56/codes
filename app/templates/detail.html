@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="split">
+  <div class="left-panel">
+    <h2>{{ dest.name }}</h2>
+    <p class="muted">{{ dest.location }} · {{ dest.category|capitalize }}</p>
+    <ul class="tags">
+      <li class="tag {% if not dest.has_wifi %}good{% endif %}">No Wi‑Fi</li>
+      <li class="tag {% if not dest.allows_screens %}good{% endif %}">No Screens</li>
+    </ul>
+    <p class="desc">{{ dest.description }}</p>
+  </div>
+  <div class="right-panel gallery">
+    {% if dest.images %}
+      {% for img in dest.images %}
+        <figure>
+          <img src="{{ url_for('main.uploaded_file', filename=img.filename) }}" alt="{{ img.caption or dest.name }}">
+          {% if img.caption %}<figcaption>{{ img.caption }}</figcaption>{% endif %}
+        </figure>
+      {% endfor %}
+    {% else %}
+      <div class="placeholder large">No images yet</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}
